@@ -1,24 +1,35 @@
-const express = require('express')
-const app = express()
-const port = 80
 Web3 = require('web3');
 web3 = new Web3("https://mainnet.infura.io/v3/068c6affceff4f9eb836014bc3cbe60b"); // infura API key
 
-app.use(express.static('public'));
+const express = require('express')
+const app = express()
+const http = require('http');
+const server = http.createServer(app);
+const {
+    Server
+} = require("socket.io");
+const io = new Server(server);
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.use(express.static('public'))
+
+io.on('connection', (socket) => {
+    console.log('Event ['+new Date+'] User Connection with ID: '+socket.id);
+    socket.on('img', (msg) => {
+        console.log("a");
+        io.emit("img", msg);
+    });
 });
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+server.listen(80, () => {
+    console.log('listening on *:3000');
 });
 
 // const store = web3.eth.accounts.wallet.encrypt(web3.eth.accounts.wallet.create(),"user input");
 
 // var out = web3.eth.accounts.wallet.decrypt(store,"user input");
 
-let audtAddr = "0xd7e0f80fb28233bdde0006c50568606a8feb964c";
+let audtAddr = "0xd7e0f80fb28233bdde0006c50568606a8feb964c";// Address of AUDT token
+//AUDT ABI for interaction with the token
 const audtABI = [{
     "constant": true,
     "inputs": [],
@@ -487,6 +498,6 @@ let bal = async (addr) => {
     return (parseInt(await contract.methods.balanceOf(addr).call()) / (10 ** audtDigits)).toFixed(audtDigits);
 }
 
-bal("0x3a936378b59504a7db8054ae6b4ce000bdc720b9").then((result) => {
-    console.log(result);
-});
+// bal("0x3a936378b59504a7db8054ae6b4ce000bdc720b9").then((result) => { //Test function
+//     console.log(result);
+// });

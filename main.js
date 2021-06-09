@@ -14,14 +14,16 @@ app.use(express.static('public'))
 
 io.on('connection', (socket) => {
     console.log('Event ['+new Date+'] User Connection with ID: '+socket.id);
-    socket.on('img', (msg) => {
-        console.log("a");
-        io.emit("img", msg);
+    socket.on('getBalance', (addr) => {
+        bal(addr).then((result) => { //Test function
+            io.emit("getBalance", result);
+        });
+        
     });
 });
 
 server.listen(80, () => {
-    console.log('listening on *:3000');
+    console.log('listening on http://localhost');
 });
 
 // const store = web3.eth.accounts.wallet.encrypt(web3.eth.accounts.wallet.create(),"user input");

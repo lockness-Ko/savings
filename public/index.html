@@ -8,24 +8,34 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Add Site</title>
     <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container" style="width: 650px;">
+    <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="text-center">Add Site</h1>
+                <h1 class="text-center">Savings Manager</h1>
                 <br />
                 <div id="content">
-                    <hr />
-                    <form onSubmit="return false;">
-                        <div class="form-group">
-                            <label for="key">Key</label>
-                            <input class="form-control" id="key" type="number" min="0" style="width: 100%;"></input>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                    <div id="left">
                         <hr />
-                    </form>
+                        <form onSubmit="return false;">
+                            <div class="form-group">
+                                <label for="bal">Get Balance</label>
+                                <input class="form-control" id="bal" type="text" value="0x3a936378b59504a7db8054ae6b4ce000bdc720b9" min="0" style="width: 100%;"></input>
+                                <br>
+                                <div id="balOut"></div>
+                                <!-- <br> -->
+                            </div>
+                            <button type="submit" class="btn btn-primary" onclick="getBalance()">Get</button>
+                            <hr />
+                        </form>
+                    </div>
+                    <div id="right">
+                        <hr />
+                        
+                    </div>
                     <p id="accountAddress" class="text-center"></p>
                     <p id="accountBalance" class="text-center"></p>
                 </div>
